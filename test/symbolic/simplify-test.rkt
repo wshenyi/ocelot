@@ -53,7 +53,7 @@
           (define F* (interpret* F interp))
           (define Fsimp (simplify F))
           (define Fsimp* (interpret* Fsimp interp))
-          (define S (parameterize ([term-cache (make-hash)])
+          (define S (parameterize ([current-terms (make-hash)])
                       (verify (assert (equal? F* Fsimp*)))))
           (check-pred unsat? S (~a (ast->datum F)))
           (clear-most-state!))))

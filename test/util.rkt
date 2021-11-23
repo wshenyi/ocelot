@@ -84,7 +84,8 @@
 
 ; clear state but without restarting the solver
 (define (clear-most-state!)
-  (current-oracle (oracle))
-  (clear-asserts!)
+;  (current-oracle (oracle))
+  (clear-vc!)
   (clear-terms!)
+  (gc-terms!)
   (solver-clear (current-solver)))
