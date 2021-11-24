@@ -24,8 +24,8 @@
           (filter (λ (e) (equal? (ast/relation-arity e) arity)) terminals)
           ; non-terminals if depth > 0
           (begin
-            (define-values (terms cache)
-              (for*/fold ([terms '()][cache (hash)])
+            (define-values (term-array cache)
+              (for*/fold ([term-array '()][cache (hash)])
                          ([op (in-list ops)] #:unless (and (equal? op ast/join) (= num-joins 0))
                           [args (in-list (possible-args op arity max-arity))])
                 (let ([num-joins-in-subexprs (- num-joins (if (equal? op ast/join) 1 0))])
@@ -41,9 +41,9 @@
                                  (let ([expr (rec a (- bnd 1) num-joins-in-subexprs)])
                                    (set! cache (hash-set cache key (append (hash-ref cache key '()) (list expr))))
                                    expr)])))))
-                  (values (append terms (if (for/or ([e (in-list subexprs)]) ($false? e)) '() (list (apply op subexprs))))
+                  (values (append term-array (if (for/or ([e (in-list subexprs)]) ($false? e)) '() (list (apply op subexprs))))
                           cache))))
-            (append terms
+            (append term-array
                     (if balanced?
                         '()
                         (filter (λ (e) (equal? (ast/relation-arity e) arity)) terminals))))))

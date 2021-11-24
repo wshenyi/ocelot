@@ -1,4 +1,4 @@
-#lang s-exp rosette
+#lang rosette
 
 (require racket/require (matching-identifiers-in #rx"^node/.+$" "../lang/ast.rkt")
          (only-in "../lang/ast.rkt" relation-name relation-arity)
